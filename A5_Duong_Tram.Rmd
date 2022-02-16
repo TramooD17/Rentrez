@@ -1,0 +1,45 @@
+---
+title: "A5_Duong_Tram"
+author: "TramooD17"
+date: "15/02/2022"
+output: html_document
+---
+
+Assignment 5: Question 4  
+Import the Sequences.csv file
+```{r}
+Seq = read.csv("A5_Duong_Tram_Sequences.csv")
+library("dplyr")
+library("tidyr")
+```
+Count the number of each base pair in each of the three sequences.
+```{r}
+nucs <- Seq$Sequence
+a <- lengths(regmatches(nucs, gregexpr("A", nucs)))
+print(a)
+t <- lengths(regmatches(nucs, gregexpr("T", nucs)))
+print(t)
+c <- lengths(regmatches(nucs, gregexpr("C", nucs)))
+print(c)
+g <- lengths(regmatches(nucs, gregexpr("G", nucs)))
+print(g)
+```
+Print out each sequence:
+```{r}
+print(Seq$Sequence)
+```
+Print out the number of each nucleotide as a table for each of the three sequences
+```{r}
+tbl <- table(stack(`names<-`(strsplit(Seq$Sequence, ""), Seq$Name)))
+print(tbl)
+```
+Calculate GC Content and create a final table showing GC content for each sequence ID.
+```{r}
+Seq %>%
+summarise(Name, percentage = ((g+c)/(a+t+c+g))*100)
+```
+Image of Borrelia burgdorferi
+```{r img-with-knitr, echo=FALSE, fig.align='center', out.width='100%', fig.cap='Image from SciencePhoto via https://microbewiki.kenyon.edu/index.php/Borrelia_burgdorferi_NEU2011'}
+knitr::include_graphics("/Users/tramoo/Documents/BIOL432/A5_Duong_Tram/400px-Download_now.jpeg")
+```
+Wikipedia: https://en.wikipedia.org/wiki/Borrelia_burgdorferi
